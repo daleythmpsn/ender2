@@ -12,15 +12,6 @@ type = tplink_smartplug
 address = 10.0.0.172
 output_id = 1
 
-[update_manager timelapse]
-type = git_repo
-primary_branch = main
-path = ~/moonraker-timelapse
-origin = https://github.com/mainsail-crew/moonraker-timelapse.git
-managed_services = klipper moonraker
-
-[timelapse]
-
 [server]
 host = 0.0.0.0
 port = 7125
