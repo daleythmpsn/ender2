@@ -1,53 +1,59 @@
-[include shell_command.cfg]
-[include fluidd.cfg]
-[include gcode.cfg]
-#[include adxl.cfg]
-[include mainsail.cfg]
-[virtual_sdcard]
-path: /home/biqu/printer_data/gcodes
-on_error_gcode: CANCEL_PRINT
-[include KAMP/*cfg]
+# This file contains pin mappings for the stock 2021 Creality
+# Ender2 Pro. To use this config, during "make menuconfig" select
+# the STM32F103 with a "28KiB bootloader" and serial
+# (on USART1 PA10/PA9) communication.
 
-[include temp.cfg]
-[skew_correction]
-[exclude_object]
-#[include timelapse.cfg]
+# If you prefer a direct serial connection, in "make menuconfig"
+# select "Enable extra low-level configuration options" and select
+# serial (on USART2 PA3/PA2), which is broken out on the 10 pin IDC
+# cable used for the LCD module as follows:
+# 3: Tx, 4: Rx, 9: GND, 10: VCC
+
+# Flash this firmware by copying "out/klipper.bin" to a SD card and
+# turning on the printer with the card inserted. The firmware
+# filename must end in ".bin" and must not match the last filename
+# that was flashed.
+
+# See docs/Config_Reference.md for a description of parameters.
+
+[include gcode.cfg]
+[include mainsail.cfg]
+# [include fluid.cfg]
 
 [stepper_x]
 step_pin: PC2
 dir_pin: PB9
 enable_pin: !PC3
 microsteps: 16
-rotation_distance: 39.77
+rotation_distance: 40
 endstop_pin: ^PA5
-position_min: -11
-position_endstop: -11
+position_min: -20
+position_endstop: -20
 position_max: 165
-homing_speed: 80
+homing_speed: 50
 
 [stepper_y]
 step_pin: PB8
 dir_pin: PB7
 enable_pin: !PC3
 microsteps: 16
-rotation_distance: 39.81
+rotation_distance: 40
 endstop_pin: ^PA6
 position_min: -5
 position_endstop: -5
 position_max: 165
-homing_speed: 80
+homing_speed: 50
 
 [stepper_z]
 step_pin: PB6
 dir_pin: !PB5
 enable_pin: !PC3
 microsteps: 16
-rotation_distance: 7.98
+rotation_distance: 8
 endstop_pin: probe:z_virtual_endstop #^PA7
-#position_endstop: 0.0
+# endstop_pin: ^PA7
+# position_endstop: 0.0
 position_max: 180
-position_min: -10
-homing_speed: 80
 
 [extruder]
 max_extrude_only_distance: 100.0
@@ -55,8 +61,8 @@ step_pin: PB4
 dir_pin: PB3
 enable_pin: !PC3
 microsteps: 16
-rotation_distance: 31.857
-nozzle_diameter: 0.600
+rotation_distance: 27.53480577
+nozzle_diameter: 0.400
 filament_diameter: 1.750
 heater_pin: PA1
 sensor_pin: PC5
@@ -67,9 +73,6 @@ sensor_type: EPCOS 100K B57560G104F
 #pid_Kd: 104.459
 min_temp: 0
 max_temp: 260
-min_extrude_temp: 0
-# pressure_advance: 0.07
-max_extrude_cross_section: 5
 
 [heater_bed]
 heater_pin: PB10
@@ -80,7 +83,7 @@ sensor_pin: PC4
 #pid_Ki: 1.594
 #pid_Kd: 834.031
 min_temp: 0
-max_temp: 90
+max_temp: 80
 
 [fan]
 pin: PA0
@@ -125,7 +128,7 @@ x_offset: -43
 # x_offset: -42
 # y_offset: -8
 y_offset: 0
-#z_offset: 3.7
+z_offset: 3.7
 samples: 2
 speed: 2
 #probe_with_touch_mode: False
@@ -149,71 +152,18 @@ horizontal_move_z: 10.
 speed: 80.
 screw_thread: CW-M3
 
-[gcode_macro m205]
-gcode:
 
 #*# <---------------------- SAVE_CONFIG ---------------------->
 #*# DO NOT EDIT THIS BLOCK OR BELOW. The contents are auto-generated.
 #*#
-#*# [bed_mesh default]
-#*# version = 1
-#*# points =
-#*# 	0.032500, 0.093750, 0.037500, -0.040000
-#*# 	-0.015000, 0.037500, 0.008750, -0.065000
-#*# 	-0.022500, 0.050000, 0.022500, -0.051250
-#*# 	0.018750, 0.102500, 0.055000, 0.022500
-#*# tension = 0.2
-#*# min_x = 30.36
-#*# algo = lagrange
-#*# y_count = 4
-#*# mesh_y_pps = 2
-#*# min_y = 30.35
-#*# x_count = 4
-#*# max_y = 129.63
-#*# mesh_x_pps = 2
-#*# max_x = 109.97999999999999
-#*#
 #*# [extruder]
 #*# control = pid
-#*# pid_kp = 26.612
-#*# pid_ki = 1.570
-#*# pid_kd = 112.769
+#*# pid_kp = 26.885
+#*# pid_ki = 1.586
+#*# pid_kd = 113.925
 #*#
 #*# [heater_bed]
 #*# control = pid
-#*# pid_kp = 74.577
-#*# pid_ki = 2.250
-#*# pid_kd = 618.057
-#*#
-#*# [bed_mesh HOT]
-#*# version = 1
-#*# points =
-#*# 	0.012500, 0.038333, 0.075833, 0.047500, -0.072500
-#*# 	-0.051667, -0.006667, 0.037500, -0.001667, -0.092500
-#*# 	-0.050833, -0.000833, 0.050000, 0.014167, -0.077500
-#*# 	-0.038333, -0.009167, 0.049167, 0.013333, -0.071667
-#*# 	-0.005833, 0.037500, 0.069167, 0.050000, -0.002500
-#*# x_count = 5
-#*# y_count = 5
-#*# mesh_x_pps = 2
-#*# mesh_y_pps = 2
-#*# algo = lagrange
-#*# tension = 0.2
-#*# min_x = 4.990000000000002
-#*# max_x = 110.0
-#*# min_y = 20.0
-#*# max_y = 140.0
-#*#
-#*# [input_shaper]
-#*# shaper_type_x = zv
-#*# shaper_freq_x = 105.4
-#*# shaper_type_y = 2hump_ei
-#*# shaper_freq_y = 79.4
-#*#
-#*# [bltouch]
-#*# z_offset = 3.511
-#*#
-#*# [skew_correction Califlower]
-#*# xy_skew = -0.032408289028513435
-#*# xz_skew = 0.0
-#*# yz_skew = 0.0
+#*# pid_kp = 74.738
+#*# pid_ki = 1.880
+#*# pid_kd = 742.708
